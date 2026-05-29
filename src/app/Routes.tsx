@@ -1,0 +1,26 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import LoginPage from '../pages/auth/LoginPage'
+import CustomersPage from '../pages/customers/CustomersPage'
+import EstadosPage from '../pages/estados/EstadosPage'
+import HomePage from '../pages/home/HomePage'
+import SuppliersPage from '../pages/suppliers/SuppliersPage'
+import type { RootState } from '../store'
+
+function AppRoutes() {
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated)
+
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate replace to="/login" />} />
+      <Route path="/clientes" element={isAuthenticated ? <CustomersPage /> : <Navigate replace to="/login" />} />
+      <Route path="/estados" element={isAuthenticated ? <EstadosPage /> : <Navigate replace to="/login" />} />
+      <Route path="/proveedores" element={isAuthenticated ? <SuppliersPage /> : <Navigate replace to="/login" />} />
+      <Route path="*" element={<Navigate replace to={isAuthenticated ? '/' : '/login'} />} />
+    </Routes>
+  )
+}
+
+export default AppRoutes
+
