@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import swal from 'sweetalert'
 import * as yup from 'yup'
 import { loginStart, loginSuccess, loginFailure } from '../../features/auth/authSlice'
-import { login as loginApi, LoginCredentials, LoginResponse } from '../../services/authService'
+import { login as loginApi, saveAuthSession } from '../../services/authService'
+import type { LoginCredentials, LoginResponse } from '../../services/authService'
 import SocialLoginButtons from '../../components/auth/SocialLoginButtons'
 import AlertMessage from '../../components/ui/AlertMessage'
 import type { RootState } from '../../store'
@@ -37,15 +38,15 @@ function LoginPage() {
       dispatch(loginStart())
 
       const data: LoginResponse = await loginApi(form)
-      console.log("Dara Login receive: ", data);
 
       if (data.success && data.user) {
-        dispatch(loginSuccess(data.user))
+        const session = saveAuthSession(data, rememberMe)
+        dispatch(loginSuccess(session))
         navigate('/')
       } else {
         const message = data.message || data.mensaje || 'Error de autenticación'
         dispatch(loginFailure(message))
-        swal('Error de inicio de sesión', message, 'error')
+        swal(`Error de inicio de sesión`, message, 'error')
       }
     } catch (err) {
       if (err instanceof yup.ValidationError) {
@@ -53,7 +54,7 @@ function LoginPage() {
       } else {
         const message = 'No se pudo conectar con la API'
         dispatch(loginFailure(message))
-        swal('Error de inicio de sesión', message, 'error')
+        swal(`Error de inicio de sesión`, message, 'error')
       }
     }
   }

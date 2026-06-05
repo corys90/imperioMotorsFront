@@ -319,7 +319,7 @@ function CustomersPage() {
                           onClick={() => handleOpenEditModal(customer)}
                           title="Editar"
                         >
-                          Editar
+                          ✏️
                         </button>
                         <button
                           type="button"
@@ -327,7 +327,7 @@ function CustomersPage() {
                           onClick={() => handleDelete(customer)}
                           title="Eliminar"
                         >
-                          Borrar
+                          🗑️
                         </button>
                       </div>
                     </td>

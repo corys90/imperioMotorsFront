@@ -359,6 +359,7 @@ body {
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
+
 .mobile-menu-panel.open {
   transform: translateX(0);
   opacity: 1;
@@ -405,7 +406,7 @@ body {
 
 .mobile-dropdown.open .dropdown-panel {
   position: static;
-  max-height: 160px;
+  max-height: 500px;
   opacity: 1;
   visibility: visible;
   padding: 0.25rem 0;
@@ -458,6 +459,7 @@ body {
 
   .brand {
     grid-column: 2;
+    grid-row: 1;
     justify-self: center;
   }
 
@@ -469,6 +471,7 @@ body {
   .hamburger-button {
     display: inline-flex;
     grid-column: 1;
+    grid-row: 1;
     justify-self: start;
     width: 52px;
     height: 52px;
@@ -477,6 +480,7 @@ body {
 
   .landing-navbar .nav-actions {
     grid-column: 3;
+    grid-row: 1;
     justify-self: end;
     width: auto;
   }
@@ -624,5 +628,27 @@ body {
 
   .form-check {
     width: 100%;
+  }
+
+  /* Stacks filter form columns and buttons on mobile screens */
+  .card-body form.row > .col-6 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .card-body form.row .d-flex.gap-2,
+  .card-body form.row .d-flex {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+
+  .card-body form.row .d-flex.gap-2 > button,
+  .card-body form.row .d-flex.gap-2 > .btn,
+  .card-body form.row .d-flex > button,
+  .card-body form.row .d-flex > .btn {
+    width: 100% !important;
+    margin-left: 0 !important;
   }
 }

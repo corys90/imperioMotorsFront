@@ -2,6 +2,7 @@ import { useState, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../../features/auth/authSlice'
+import { clearAuthSession } from '../../services/authService'
 import type { RootState } from '../../store'
 import imperioMotorsLogo from '../../assets/images/ImperioMotors.png'
 
@@ -19,6 +20,7 @@ function Layout({ children }: LayoutProps) {
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false)
 
   const handleLogout = () => {
+    clearAuthSession()
     dispatch(logout())
     navigate('/login')
   }
@@ -43,13 +45,6 @@ function Layout({ children }: LayoutProps) {
       <header className="landing-navbar">
         <div className="landing-navbar-inner container d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-3">
-            <Link to="/" className="brand d-flex align-items-center gap-2 text-decoration-none">
-              <img className="brand-logo" src={imperioMotorsLogo} alt="Imperio Motors" />
-              <span className="brand-text text-center">
-                <span>Imperio</span>
-                <span>motos S.A.S</span>
-              </span>
-            </Link>
             <button
               type="button"
               className="hamburger-button d-flex d-md-none align-items-center justify-content-center"
@@ -58,6 +53,13 @@ function Layout({ children }: LayoutProps) {
             >
               <span>☰</span>
             </button>
+            <Link to="/" className="brand d-flex align-items-center gap-2 text-decoration-none">
+              <img className="brand-logo" src={imperioMotorsLogo} alt="Imperio Motors" />
+              <span className="brand-text text-center">
+                <span>Imperio</span>
+                <span>motos S.A.S</span>
+              </span>
+            </Link>
             <nav className="app-menu d-none d-md-flex align-items-center gap-2">
               <Link to="/" className="menu-item text-decoration-none d-flex align-items-center gap-1">
                 <span className="menu-icon" aria-hidden="true">🏠</span>
@@ -78,13 +80,22 @@ function Layout({ children }: LayoutProps) {
                   <Link to="/estados" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Estados
                   </Link>
+                  <Link to="/categorias" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Categorias
+                  </Link>
+                  <Link to="/sucursales" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Sucursales
+                  </Link>
+                  <Link to="/bodegas" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Bodegas
+                  </Link>
                 </div>
               </div>
             </nav>
           </div>
 
           <div className="nav-actions d-flex align-items-center gap-3">
-            <span className="text-white opacity-75 d-none d-sm-inline small">
+            <span className="text-white opacity-75 d-none d-md-inline small">
               Hola, <strong>{user?.name || user?.email || 'Usuario'}</strong>
             </span>
             <button type="button" className="btn btn-outline-secondary btn-icon" onClick={handleLogout} aria-label="Cerrar sesion">
@@ -131,6 +142,27 @@ function Layout({ children }: LayoutProps) {
                     onClick={closeMobileMenu}
                   >
                     Estados
+                  </Link>
+                  <Link
+                    to="/categorias"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Categorias
+                  </Link>
+                  <Link
+                    to="/sucursales"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Sucursales
+                  </Link>
+                  <Link
+                    to="/bodegas"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Bodegas
                   </Link>
                 </div>
               </div>
