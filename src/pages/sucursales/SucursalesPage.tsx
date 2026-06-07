@@ -35,6 +35,13 @@ const initialFormState: SucursalCreateInput = {
 
 function SucursalesPage() {
   const { user } = useSelector((state: RootState) => state.auth)
+  const getUsername = (idUsuario: any) => {
+    if (user && String(user.id) === String(idUsuario)) {
+      return user.username || 'admin'
+    }
+    if (String(idUsuario) === '1') return 'admin'
+    return idUsuario || '-'
+  }
   const [sucursales, setSucursales] = useState<Sucursal[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -215,8 +222,8 @@ function SucursalesPage() {
                 <th className="py-3 px-4">Nombre</th>
                 <th className="py-3">Dirección</th>
                 <th className="py-3">Teléfono/Celular</th>
-                {/* <th className="py-3">Usuario</th> */}
-                <th className="py-3">Fecha modificación</th>
+                 <th className="py-3">Usuario</th>
+                 <th className="py-3">Fecha modificación</th>
                 <th className="py-3 text-center px-4" style={{ width: '150px' }}>Acciones</th>
               </tr>
             </thead>
@@ -244,8 +251,8 @@ function SucursalesPage() {
                     </td>
                     <td>{sucursal.dir_sucursal || '-'}</td>
                     <td className="small font-monospace">{sucursal.tel_cel || '-'}</td>
-                    {/* <td className="small font-monospace">{sucursal.id_usuario}</td> */}
-                    <td className="small font-monospace">{formatDate(sucursal.fec_mod)}</td>
+                     <td className="small font-monospace">{getUsername(sucursal.id_usuario)}</td>
+                     <td className="small font-monospace">{formatDate(sucursal.fec_mod)}</td>
                     <td className="text-center px-4">
                       <div className="d-flex justify-content-center gap-2">
                         <button

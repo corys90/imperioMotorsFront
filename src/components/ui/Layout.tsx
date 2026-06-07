@@ -83,11 +83,17 @@ function Layout({ children }: LayoutProps) {
                   <Link to="/categorias" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Categorias
                   </Link>
+                  <Link to="/tipologia" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Tipologia
+                  </Link>
                   <Link to="/sucursales" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Sucursales
                   </Link>
                   <Link to="/bodegas" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Bodegas
+                  </Link>
+                  <Link to="/medios-pago" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Medios de Pago
                   </Link>
                 </div>
               </div>
@@ -151,6 +157,13 @@ function Layout({ children }: LayoutProps) {
                     Categorias
                   </Link>
                   <Link
+                    to="/tipologia"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Tipologia
+                  </Link>
+                  <Link
                     to="/sucursales"
                     className="dropdown-item text-decoration-none d-block w-100 text-start"
                     onClick={closeMobileMenu}
@@ -163,6 +176,13 @@ function Layout({ children }: LayoutProps) {
                     onClick={closeMobileMenu}
                   >
                     Bodegas
+                  </Link>
+                  <Link
+                    to="/medios-pago"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Medios de Pago
                   </Link>
                 </div>
               </div>

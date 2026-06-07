@@ -34,6 +34,13 @@ const initialFormState: EstadoCreateInput = {
 
 function EstadosPage() {
   const { user } = useSelector((state: RootState) => state.auth)
+  const getUsername = (idUsuario: any) => {
+    if (user && String(user.id) === String(idUsuario)) {
+      return user.username || 'admin'
+    }
+    if (String(idUsuario) === '1') return 'admin'
+    return idUsuario || '-'
+  }
   const [estados, setEstados] = useState<Estado[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -266,7 +273,7 @@ function EstadosPage() {
                       <div className="fw-bold">{estado.desc_estado}</div>
                       <span className="small text-muted">ID {estado.id_estado}</span>
                     </td>
-                    <td className="small font-monospace">{estado.id_usuario}</td>
+                    <td className="small font-monospace">{getUsername(estado.id_usuario)}</td>
                     <td className="small font-monospace">{formatDate(estado.fec_creacion)}</td>
                     <td className="small font-monospace">{formatDate(estado.fec_mod)}</td>
                     <td className="text-center">

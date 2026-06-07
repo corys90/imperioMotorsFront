@@ -42,6 +42,13 @@ const initialFormState: BodegaCreateInput = {
 
 function BodegasPage() {
   const { user } = useSelector((state: RootState) => state.auth)
+  const getUsername = (idUsuario: any) => {
+    if (user && String(user.id) === String(idUsuario)) {
+      return user.username || 'admin'
+    }
+    if (String(idUsuario) === '1') return 'admin'
+    return idUsuario || '-'
+  }
   const [bodegas, setBodegas] = useState<Bodega[]>([])
   const [sucursales, setSucursales] = useState<Sucursal[]>([])
   const [total, setTotal] = useState(0)
@@ -344,7 +351,7 @@ function BodegasPage() {
                       <span className="small text-muted">ID {bodega.id_bodega}</span>
                     </td>
                     <td>{getSucursalName(bodega.id_sucursal)}</td>
-                    <td className="small font-monospace">{bodega.id_usuario}</td>
+                    <td className="small font-monospace">{getUsername(bodega.id_usuario)}</td>
                     <td className="small font-monospace">{formatDate(bodega.fecha_creacion)}</td>
                     <td className="small font-monospace">{formatDate(bodega.fecha_mod)}</td>
                     <td className="text-center">

@@ -416,6 +416,20 @@ body {
   padding-left: 2.4rem;
 }
 
+.tipologia-modal-backdrop {
+  background-color: rgba(15, 46, 24, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.tipologia-modal-body {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.action-column {
+  width: 150px;
+}
+
 .landing-hero {
   border-radius: 1.75rem;
   border: 1px solid rgba(42, 139, 87, 0.12);

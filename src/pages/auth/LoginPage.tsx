@@ -39,7 +39,7 @@ function LoginPage() {
 
       const data: LoginResponse = await loginApi(form)
 
-      if (data.success && data.user) {
+      if (data.success) {
         const session = saveAuthSession(data, rememberMe)
         dispatch(loginSuccess(session))
         navigate('/')
