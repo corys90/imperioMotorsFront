@@ -10,6 +10,7 @@ import SuppliersPage from '../pages/suppliers/SuppliersPage'
 import SucursalesPage from '../pages/sucursales/SucursalesPage'
 import TipologiaPage from '../pages/tipologia/TipologiaPage'
 import MediosPagoPage from '../pages/medios-pago/MediosPagoPage'
+import ProductsPage from '../pages/productos/ProductsPage'
 import type { RootState } from '../store'
 
 function AppRoutes() {
@@ -20,6 +21,7 @@ function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate replace to="/login" />} />
       <Route path="/clientes" element={isAuthenticated ? <CustomersPage /> : <Navigate replace to="/login" />} />
+      <Route path="/productos" element={isAuthenticated ? <ProductsPage /> : <Navigate replace to="/login" />} />
       <Route path="/estados" element={isAuthenticated ? <EstadosPage /> : <Navigate replace to="/login" />} />
       <Route path="/proveedores" element={isAuthenticated ? <SuppliersPage /> : <Navigate replace to="/login" />} />
       <Route path="/categorias" element={isAuthenticated ? <CategoriasPage /> : <Navigate replace to="/login" />} />
