@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import swal from 'sweetalert'
 import * as yup from 'yup'
@@ -48,6 +48,79 @@ function sortProducts(products: Product[]) {
   return [...products]
     .sort((a, b) => productLabel(a).localeCompare(productLabel(b), 'es', { sensitivity: 'base' }))
     .slice(0, 10)
+}
+
+interface SearchableDropdownProps {
+  id: string
+  value: string
+  onChange: (value: string) => void
+  options: { label: string; value: string }[]
+  placeholder?: string
+  className?: string
+  disabled?: boolean
+}
+
+function SearchableDropdown({
+  id,
+  value,
+  onChange,
+  options,
+  placeholder,
+  className,
+  disabled
+}: SearchableDropdownProps) {
+  const [isOpen, setIsOpen] = useState(false)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  return (
+    <div className="position-relative" ref={wrapperRef}>
+      <input
+        id={id}
+        type="text"
+        className={`form-control ${className || ''}`}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value)
+          setIsOpen(true)
+        }}
+        onFocus={() => setIsOpen(true)}
+        autoComplete="off"
+        disabled={disabled}
+      />
+      {isOpen && options.length > 0 && !disabled && (
+        <ul
+          className="dropdown-menu show w-100 position-absolute shadow-sm"
+          style={{ maxHeight: '200px', overflowY: 'auto', zIndex: 1050, marginTop: '4px' }}
+        >
+          {options.map((opt, index) => (
+            <li key={index}>
+              <button
+                type="button"
+                className="dropdown-item text-truncate"
+                onClick={() => {
+                  onChange(opt.label)
+                  setIsOpen(false)
+                }}
+              >
+                {opt.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
 }
 
 function ProdProveePage() {
@@ -218,12 +291,14 @@ function ProdProveePage() {
 
   const handleFormSupplierChange = (value: string) => {
     setFormSupplierQuery(value)
+    setSupplierQuery(value)
     const supplier = resolveSupplier(value)
     setForm({ ...form, id_proveedor: supplier?.id?.toString() || '' })
   }
 
   const handleFormProductChange = (value: string) => {
     setFormProductQuery(value)
+    setProductQuery(value)
     const product = resolveProduct(value)
     setForm({ ...form, id_producto: product?.id_producto?.toString() || '' })
   }
@@ -307,7 +382,12 @@ function ProdProveePage() {
           <h1 className="h2 mb-1 fw-bold text-success-dark">Productos Proveedores</h1>
           <p className="text-muted mb-0">Gestion de productos asociados a proveedores de Imperio Motors</p>
         </div>
-        <button type="button" className="btn btn-primary d-flex align-items-center gap-2" onClick={handleOpenAddModal}>
+        <button 
+          type="button" 
+          className="btn btn-primary d-flex align-items-center gap-2" 
+          onClick={handleOpenAddModal}
+          disabled={!selectedSupplier || !selectedProduct}
+        >
           <span>+</span> Nuevo Producto Proveedor
         </button>
       </div>
@@ -317,37 +397,23 @@ function ProdProveePage() {
           <div className="row g-2">
             <div className="col-12 col-lg-5">
               <label htmlFor="supplier-filter" className="form-label small fw-bold mb-1">Proveedor</label>
-              <input
+              <SearchableDropdown
                 id="supplier-filter"
-                type="text"
-                className="form-control"
-                list="supplier-filter-options"
                 placeholder="Buscar por NIT o nombre"
                 value={supplierQuery}
-                onChange={(e) => handleSupplierFilterChange(e.target.value)}
+                onChange={handleSupplierFilterChange}
+                options={supplierOptions.map((supplier) => ({ label: supplierLabel(supplier), value: supplier.id.toString() }))}
               />
-              <datalist id="supplier-filter-options">
-                {supplierOptions.map((supplier) => (
-                  <option key={supplier.id} value={supplierLabel(supplier)} />
-                ))}
-              </datalist>
             </div>
             <div className="col-12 col-lg-5">
               <label htmlFor="product-filter" className="form-label small fw-bold mb-1">Producto</label>
-              <input
+              <SearchableDropdown
                 id="product-filter"
-                type="text"
-                className="form-control"
-                list="product-filter-options"
                 placeholder="Buscar por ID o descripcion"
                 value={productQuery}
-                onChange={(e) => handleProductFilterChange(e.target.value)}
+                onChange={handleProductFilterChange}
+                options={productOptions.map((product) => ({ label: productLabel(product), value: product.id_producto.toString() }))}
               />
-              <datalist id="product-filter-options">
-                {productOptions.map((product) => (
-                  <option key={product.id_producto} value={productLabel(product)} />
-                ))}
-              </datalist>
             </div>
             <div className="col-12 col-lg-2 d-flex align-items-end">
               <button type="button" className="btn btn-outline-secondary w-100" onClick={handleClearFilters}>
@@ -418,7 +484,7 @@ function ProdProveePage() {
                           onClick={() => handleOpenEditModal(record)}
                           title="Editar"
                         >
-                          Edit
+                          ✏️
                         </button>
                         <button
                           type="button"
@@ -426,7 +492,7 @@ function ProdProveePage() {
                           onClick={() => handleDelete(record)}
                           title="Eliminar"
                         >
-                          Del
+                          🗑️
                         </button>
                       </div>
                     </td>
@@ -492,47 +558,37 @@ function ProdProveePage() {
                           name="Id"
                           value={form.Id}
                           onChange={handleInputChange}
-                          disabled={Boolean(editingRecord)}
+                          disabled={true}
                         />
                         {errors.Id && <div className="invalid-feedback">{errors.Id}</div>}
                       </div>
 
                       <div className="col-12 col-md-8">
                         <label htmlFor="form-supplier" className="form-label small fw-bold">Proveedor *</label>
-                        <input
+                        <SearchableDropdown
                           id="form-supplier"
-                          type="text"
-                          className={`form-control ${errors.id_proveedor ? 'is-invalid' : ''}`}
-                          list="form-supplier-options"
+                          className={errors.id_proveedor ? 'is-invalid' : ''}
                           placeholder="Buscar por NIT o nombre"
                           value={formSupplierQuery}
-                          onChange={(e) => handleFormSupplierChange(e.target.value)}
+                          onChange={handleFormSupplierChange}
+                          options={supplierOptions.map((supplier) => ({ label: supplierLabel(supplier), value: supplier.id.toString() }))}
+                          disabled={true}
                         />
-                        <datalist id="form-supplier-options">
-                          {supplierOptions.map((supplier) => (
-                            <option key={supplier.id} value={supplierLabel(supplier)} />
-                          ))}
-                        </datalist>
-                        {errors.id_proveedor && <div className="invalid-feedback">{errors.id_proveedor}</div>}
+                        {errors.id_proveedor && <div className="invalid-feedback d-block">{errors.id_proveedor}</div>}
                       </div>
 
                       <div className="col-12">
                         <label htmlFor="form-product" className="form-label small fw-bold">Producto *</label>
-                        <input
+                        <SearchableDropdown
                           id="form-product"
-                          type="text"
-                          className={`form-control ${errors.id_producto ? 'is-invalid' : ''}`}
-                          list="form-product-options"
+                          className={errors.id_producto ? 'is-invalid' : ''}
                           placeholder="Buscar por ID o descripcion"
                           value={formProductQuery}
-                          onChange={(e) => handleFormProductChange(e.target.value)}
+                          onChange={handleFormProductChange}
+                          options={productOptions.map((product) => ({ label: productLabel(product), value: product.id_producto.toString() }))}
+                          disabled={true}
                         />
-                        <datalist id="form-product-options">
-                          {productOptions.map((product) => (
-                            <option key={product.id_producto} value={productLabel(product)} />
-                          ))}
-                        </datalist>
-                        {errors.id_producto && <div className="invalid-feedback">{errors.id_producto}</div>}
+                        {errors.id_producto && <div className="invalid-feedback d-block">{errors.id_producto}</div>}
                       </div>
                     </div>
 
