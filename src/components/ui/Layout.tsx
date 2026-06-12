@@ -77,6 +77,9 @@ function Layout({ children }: LayoutProps) {
                   <Link to="/productos" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Productos
                   </Link>
+                  <Link to="/productos-proveedores" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Productos Proveedores
+                  </Link>
                   <Link to="/proveedores" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Proveedor
                   </Link>
@@ -144,6 +147,13 @@ function Layout({ children }: LayoutProps) {
                     onClick={closeMobileMenu}
                   >
                     Productos
+                  </Link>
+                  <Link
+                    to="/productos-proveedores"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Productos Proveedores
                   </Link>
                   <Link
                     to="/proveedores"
