@@ -11,6 +11,8 @@ import SucursalesPage from '../pages/sucursales/SucursalesPage'
 import TipologiaPage from '../pages/tipologia/TipologiaPage'
 import MediosPagoPage from '../pages/medios-pago/MediosPagoPage'
 import ProductsPage from '../pages/productos/ProductsPage'
+import ProdProveePage from '../pages/prod-provee/ProdProveePage'
+import ProcesarRemisionesPage from '../pages/procesar-remisiones/ProcesarRemisionesPage'
 import type { RootState } from '../store'
 
 function AppRoutes() {
@@ -22,6 +24,7 @@ function AppRoutes() {
       <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate replace to="/login" />} />
       <Route path="/clientes" element={isAuthenticated ? <CustomersPage /> : <Navigate replace to="/login" />} />
       <Route path="/productos" element={isAuthenticated ? <ProductsPage /> : <Navigate replace to="/login" />} />
+      <Route path="/productos-proveedores" element={isAuthenticated ? <ProdProveePage /> : <Navigate replace to="/login" />} />
       <Route path="/estados" element={isAuthenticated ? <EstadosPage /> : <Navigate replace to="/login" />} />
       <Route path="/proveedores" element={isAuthenticated ? <SuppliersPage /> : <Navigate replace to="/login" />} />
       <Route path="/categorias" element={isAuthenticated ? <CategoriasPage /> : <Navigate replace to="/login" />} />
@@ -29,6 +32,7 @@ function AppRoutes() {
       <Route path="/sucursales" element={isAuthenticated ? <SucursalesPage /> : <Navigate replace to="/login" />} />
       <Route path="/bodegas" element={isAuthenticated ? <BodegasPage /> : <Navigate replace to="/login" />} />
       <Route path="/medios-pago" element={isAuthenticated ? <MediosPagoPage /> : <Navigate replace to="/login" />} />
+      <Route path="/procesar-remisiones" element={isAuthenticated ? <ProcesarRemisionesPage /> : <Navigate replace to="/login" />} />
       <Route path="*" element={<Navigate replace to={isAuthenticated ? '/' : '/login'} />} />
     </Routes>
   )

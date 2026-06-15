@@ -77,6 +77,9 @@ function Layout({ children }: LayoutProps) {
                   <Link to="/productos" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Productos
                   </Link>
+                  <Link to="/productos-proveedores" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Productos Proveedores
+                  </Link>
                   <Link to="/proveedores" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Proveedor
                   </Link>
@@ -97,6 +100,9 @@ function Layout({ children }: LayoutProps) {
                   </Link>
                   <Link to="/medios-pago" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Medios de Pago
+                  </Link>
+                  <Link to="/procesar-remisiones" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Procesar Remisión
                   </Link>
                 </div>
               </div>
@@ -146,6 +152,13 @@ function Layout({ children }: LayoutProps) {
                     Productos
                   </Link>
                   <Link
+                    to="/productos-proveedores"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Productos Proveedores
+                  </Link>
+                  <Link
                     to="/proveedores"
                     className="dropdown-item text-decoration-none d-block w-100 text-start"
                     onClick={closeMobileMenu}
@@ -193,6 +206,13 @@ function Layout({ children }: LayoutProps) {
                     onClick={closeMobileMenu}
                   >
                     Medios de Pago
+                  </Link>
+                  <Link
+                    to="/procesar-remisiones"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Procesar Remisión
                   </Link>
                 </div>
               </div>
