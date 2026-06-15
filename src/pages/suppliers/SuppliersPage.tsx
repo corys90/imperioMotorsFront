@@ -363,8 +363,13 @@ function SuppliersPage() {
             <nav aria-label="Page navigation">
               <ul className="pagination pagination-sm mb-0 gap-1">
                 <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
-                  <button className="page-link rounded-3 px-3 py-2" onClick={() => setPage(page - 1)}>
-                    Anterior
+                  <button className="page-link rounded-3 px-2.5 py-2" onClick={() => setPage(1)} title="Primera página">
+                    «
+                  </button>
+                </li>
+                <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
+                  <button className="page-link rounded-3 px-2.5 py-2" onClick={() => setPage(page - 1)} title="Anterior">
+                    &lt;
                   </button>
                 </li>
                 <li className="page-item disabled">
@@ -373,8 +378,13 @@ function SuppliersPage() {
                   </span>
                 </li>
                 <li className={`page-item ${page === totalPages ? 'disabled' : ''}`}>
-                  <button className="page-link rounded-3 px-3 py-2" onClick={() => setPage(page + 1)}>
-                    Siguiente
+                  <button className="page-link rounded-3 px-2.5 py-2" onClick={() => setPage(page + 1)} title="Siguiente">
+                    &gt;
+                  </button>
+                </li>
+                <li className={`page-item ${page === totalPages ? 'disabled' : ''}`}>
+                  <button className="page-link rounded-3 px-2.5 py-2" onClick={() => setPage(totalPages)} title="Última página">
+                    »
                   </button>
                 </li>
               </ul>

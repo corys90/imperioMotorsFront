@@ -101,6 +101,9 @@ function Layout({ children }: LayoutProps) {
                   <Link to="/medios-pago" className="dropdown-item text-decoration-none text-start w-100 d-block">
                     Medios de Pago
                   </Link>
+                  <Link to="/procesar-remisiones" className="dropdown-item text-decoration-none text-start w-100 d-block">
+                    Procesar Remisión
+                  </Link>
                 </div>
               </div>
             </nav>
@@ -203,6 +206,13 @@ function Layout({ children }: LayoutProps) {
                     onClick={closeMobileMenu}
                   >
                     Medios de Pago
+                  </Link>
+                  <Link
+                    to="/procesar-remisiones"
+                    className="dropdown-item text-decoration-none d-block w-100 text-start"
+                    onClick={closeMobileMenu}
+                  >
+                    Procesar Remisión
                   </Link>
                 </div>
               </div>

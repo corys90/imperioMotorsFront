@@ -12,6 +12,7 @@ import TipologiaPage from '../pages/tipologia/TipologiaPage'
 import MediosPagoPage from '../pages/medios-pago/MediosPagoPage'
 import ProductsPage from '../pages/productos/ProductsPage'
 import ProdProveePage from '../pages/prod-provee/ProdProveePage'
+import ProcesarRemisionesPage from '../pages/procesar-remisiones/ProcesarRemisionesPage'
 import type { RootState } from '../store'
 
 function AppRoutes() {
@@ -31,6 +32,7 @@ function AppRoutes() {
       <Route path="/sucursales" element={isAuthenticated ? <SucursalesPage /> : <Navigate replace to="/login" />} />
       <Route path="/bodegas" element={isAuthenticated ? <BodegasPage /> : <Navigate replace to="/login" />} />
       <Route path="/medios-pago" element={isAuthenticated ? <MediosPagoPage /> : <Navigate replace to="/login" />} />
+      <Route path="/procesar-remisiones" element={isAuthenticated ? <ProcesarRemisionesPage /> : <Navigate replace to="/login" />} />
       <Route path="*" element={<Navigate replace to={isAuthenticated ? '/' : '/login'} />} />
     </Routes>
   )
